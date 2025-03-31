@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>危险警告</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: red;
+        }
+        .warning {
+            font-size: 2em;
+            margin-top: 20%;
+        }
+        .close-btn {
+            padding: 10px 20px;
+            font-size: 1.5em;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+        }
+    </style>
+    <script>
+        function openPopups() {
+            for (let i = 0; i < 5; i++) {
+                window.open("popup.html", "", "width=400,height=300");
+            }
+        }
+        function closeWindows() {
+            window.open("", "_self", "").close();
+        }
+    </script>
+</head>
+<body onload="openPopups()">
+    <div class="warning">⚠️ 你的电脑已被感染！ ⚠️</div>
+    <button class="close-btn" onclick="closeWindows()">关闭所有窗口</button>
+</body>
+</html>
